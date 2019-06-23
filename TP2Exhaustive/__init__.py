@@ -87,22 +87,22 @@ def generateElementsForGreedy(N, isRandom, maxVol, maxPrice):
             elements[i].append(p)
             elements[i].append(v)
             elements[i].append(b)
-    print("Elementos: (ordenados por valor)")
-    elements.sort(key=lambda x: x[3], reverse=True)           # Orders by benefit (higher to lower)
+    print("Elementos:")
     for j in range(N):
         print("    Num "+str(elements[j][0])+": $"+str(elements[j][1])+", "+str(elements[j][2])+" gramos, beneficio "+str(elements[j][3]))
+    elements.sort(key=lambda x: x[3], reverse=True)  # Orders by benefit (higher to lower)
     return elements
 
-def loadBackpack(N,elements,maxVolume,initialTime):
+def loadBackpack(N, elements, maxVolume, initialTime):
     backpack = []
     partialP = 0
     partialV = 0
-    partialB = 0
+    # partialB = 0
     for i in range(N):
         aux = []
         partialP += elements[i][1]
         partialV += elements[i][2]
-        partialB += elements[i][3]
+        # partialB += elements[i][3]
         if partialV <= maxVolume:
             aux.append(elements[i][0])
             aux.append(elements[i][1])
@@ -111,16 +111,14 @@ def loadBackpack(N,elements,maxVolume,initialTime):
         else:
             partialP -= elements[i][1]
             partialV -= elements[i][2]
-            partialB -= elements[i][3]
+            # partialB -= elements[i][3]
         if aux!=[]:
             backpack.append(aux)
-
     backpack.sort(key=lambda x: x[0])           # Orders by item number (lower to higher)
-
     print()
     print("Valor Acumulado de Precios: $" + str(round(partialP, 3)))
     print("Peso Total: " + str(round(partialV, 3)) + " gramos")
-    print("Beneficio acumulado: " + str(round(partialB, 3)))
+    # print("Beneficio acumulado: " + str(round(partialB, 3)))
     print("Elementos cargados:")
     for j in range(len(backpack)):
         print("    Num " + str(backpack[j][0]) + ": $" + str(backpack[j][1]) + ", " + str(backpack[j][2]) + " gramos, beneifcio " + str(backpack[j][3]))
@@ -188,7 +186,7 @@ def menu():
 # Main Function
 if __name__ == '__main__':
     # Important Values
-    totalElements = 20  # Amount of Elements for the Problem
+    totalElements = 10  # Amount of Elements for the Problem
     randomCreation = True  # False: You must specify all elements value - True: They will create randomly
     bagMaxVolume = 4200  # Maximum Bag Capacity (in grams)
     maxPriceValue = 6000  # Maximum Money Value for an Element (only in Random Creation)
